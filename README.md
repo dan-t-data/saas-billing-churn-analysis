@@ -11,6 +11,11 @@ The analysis revealed that churn was concentrated in **large enterprise accounts
 Based on these findings, I recommended migrating manual accounts to automated billing, strengthening dunning processes, and prioritizing enterprise retention — actions that could protect **hundreds of millions in ARR**.  
 
 ---
+## Dataset Structure
+The dataset consisted of three tables, including information about customers, subscriptions, and invoices. 
+<img width="1160" height="1312" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
+
+---
 
 ## Tools, Skills & Methodology  
 - **SQL** → Queried Salesforce & NetSuite data, joined customer/subscription/invoice tables, cleaned fields, and created churn flags.  
