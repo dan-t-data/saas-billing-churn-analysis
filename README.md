@@ -83,7 +83,7 @@ In order to evaluate churn and ARR loss, I focused on the following key metrics:
 ---
 
 ## Impact  
-This project demonstrates how I operate as a **Strategic Data Operations Analyst**:  
+This project demonstrates how I operate as a **Strategic Analyst**:  
 - Integrated **Salesforce + NetSuite** data with **SQL, Excel, and Tableau**.  
 - Translated raw billing data into **clear KPIs and executive insights**.  
 - Linked operational processes (billing, payments, collections) directly to **strategic revenue outcomes**.  
