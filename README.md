@@ -17,7 +17,7 @@ This analysis revealed that enterprise accounts on manual payment methods (Check
 ---
 ## Dataset Structure
 The dataset consisted of three tables, including information about customers, subscriptions, and invoices. 
-<img width="1084" height="800" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
+<img width="1084" height="765" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
 
 ---
 
