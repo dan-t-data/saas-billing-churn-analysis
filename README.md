@@ -17,19 +17,37 @@ This analysis revealed that enterprise accounts on manual payment methods (Check
 ---
 ## Dataset Structure
 The dataset consisted of three tables, including information about customers, subscriptions, and invoices. 
-<img width="1160" height="1312" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
+<img width="1084" height="800" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
 
 ---
 
-## Tools, Skills & Methodology  
-- **SQL** → Queried Salesforce & NetSuite data, joined customer/subscription/invoice tables, cleaned fields, and created churn flags.  
-- **Excel** → Modeled and validated KPIs (Customer Churn %, ARR Churn %, ARR Loss by method), stress-tested formulas.  
-- **Tableau** → Built interactive dashboards with filters (region, plan type, payment method), KPI cards, churn vs. delay visuals, and customer-level drilldowns.  
-- **Methodology:**  
-  - Defined churn KPIs: Customer Churn %, ARR Churn %, ARR Loss by payment type.  
-  - Segmented customers by **payment method, delay buckets, region, and plan type**.  
-  - Designed dashboard layers: **executive KPIs, churn drivers, and customer drilldowns**.  
-- **Core Skills:** Data wrangling, joining disparate systems, KPI design, churn modeling, visualization, financial impact analysis, and data storytelling.  
+## Tools, Skills & Methodology
+
+### 1. Excel → Data Cleaning & Validation  
+- Imported raw CSVs (customers, subscriptions, invoices).  
+- Standardized **date formats**, removed duplicates, and flagged missing values.  
+- Used formulas (`TRIM`, `TEXT`, `IFERROR`, `VLOOKUP`, `INDEX/MATCH`) to clean fields.  
+- Built **cross-check models** with:  
+  - `COUNTIFS` → distinct churned customers.  
+  - `SUMIFS` → ARR churn by method and delay bucket.  
+- Created **pivot tables** to reconcile totals and validate SQL outputs.  
+
+### 2. SQL → Data Modeling & KPI Calculation  
+- **Joined** customer, subscription, and invoice tables on keys (`customer_id`, `subscription_id`).  
+- Created **churn flags** using `CASE` logic.  
+- Built **delay buckets** (0–5, 6–15, 16–30, 30+ days) for payment analysis.  
+- Calculated KPIs:  
+  - Customer Churn %  
+  - ARR Churn %  
+  - ARR Loss by payment method, delay, and region  
+- Applied **window functions** to rank top enterprise accounts by churned ARR.  
+
+### 3. Tableau → Visualization & Storytelling  
+- Connected cleaned SQL outputs and validated Excel files.  
+- Designed **interactive dashboard** with filters (region, plan type, payment method).  
+- Added **KPI cards** for Customer Churn %, ARR Churn %, ARR Loss.  
+- Visualized **payment delays vs churn risk**, **regional hotspots**, and **enterprise account exposure**.  
+- Built **drilldowns** for customer-level insights.  
 
 ---
 
