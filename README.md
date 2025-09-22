@@ -4,11 +4,15 @@
 ---
 
 ## Executive Summary  
-At Vastian, I conducted a churn analysis to quantify how much recurring revenue was being lost and uncover the drivers behind it. Using **SQL, Excel, and Tableau**, I integrated **Salesforce and NetSuite** data to measure churn at both the customer and revenue level.  
+At Vastian, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across SQL, Excel, and Tableau:
 
-The analysis revealed that churn was concentrated in **large enterprise accounts on manual payment methods (Check/Wire)** and further amplified by **late payments** and **regional patterns in the South & Midwest**.  
+- **SQL** to join Salesforce and NetSuite datasets (customers, subscriptions, invoices) and calculate churn drivers.
 
-Based on these findings, I recommended migrating manual accounts to automated billing, strengthening dunning processes, and prioritizing enterprise retention — actions that could protect **hundreds of millions in ARR**.  
+- **Excel** to clean, validate, and stress-test KPIs before visualization.
+
+- **Tableau** to design an interactive dashboard for executive decision-making.
+
+This analysis revealed that enterprise accounts on manual payment methods (Check/Wire) had the highest churn, worsened by late payments and regional concentration in the South & Midwest. Recommendations to migrate customers to automated billing and strengthen collections could protect ~$380M ARR.
 
 ---
 ## Dataset Structure
@@ -83,12 +87,15 @@ In order to evaluate churn and ARR loss, I focused on the following key metrics:
 ---
 
 ## Impact  
-This project demonstrates how I operate as a **Strategic Analyst**:  
-- Integrated **Salesforce + NetSuite** data with **SQL, Excel, and Tableau**.  
-- Translated raw billing data into **clear KPIs and executive insights**.  
-- Linked operational processes (billing, payments, collections) directly to **strategic revenue outcomes**.  
+This project demonstrates my ability to work end-to-end as a data analyst:
 
-By highlighting that **manual payments and late invoices were eroding nearly $380M ARR**, I provided leadership and cross-functional teams with **actionable recommendations** to protect recurring revenue and strengthen retention across high-value enterprise accounts.  
+- **Excel** → Cleaned and validated 100K+ rows of billing data, reconciled KPIs with formulas and pivots.
+
+- **SQL** → Modeled customer/subscription/invoice relationships, created churn drivers, and built aggregate metrics.
+
+- **Tableau** → Delivered an interactive dashboard that transformed raw data into strategic recommendations.
+
+By surfacing that manual payments and late invoices eroded nearly $380M ARR, I provided leadership with actionable insights to reduce churn and protect revenue
 
 ---
 
