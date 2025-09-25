@@ -4,19 +4,19 @@
 ---
 
 ## Executive Summary  
-At Vastian, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across SQL, Excel, and Tableau:
+At Vastian, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:
 
-- **SQL** to join Salesforce and NetSuite datasets (customers, subscriptions, invoices) and calculate churn drivers.
+- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
+- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and added churn flags and delay buckets.  
+- **Tableau** → designed an interactive dashboard to deliver insights for executive decision-making.  
 
-- **Excel** to clean, validate, and stress-test KPIs before visualization.
+In practice, I uploaded three clean CSVs into Tableau and created relationships to build the dashboard. To demonstrate a production-ready approach, I also authored SQL scripts that replicate the same joins and enrichments.  
 
-- **Tableau** to design an interactive dashboard for executive decision-making.
-
-This analysis revealed that enterprise accounts on manual payment methods (Check/Wire) had the highest churn, worsened by late payments and regional concentration in the South & Midwest. Recommendations to migrate customers to automated billing and strengthen collections could protect ~$380M ARR.
+The analysis revealed that enterprise accounts on manual payment methods (Check/Wire) had the highest churn, worsened by late payments and regional concentration in the South & Midwest. Recommendations to migrate customers to automated billing and strengthen collections could protect ~$380M ARR.
 
 ---
 ## Dataset Structure
-The dataset consisted of three tables, including information about customers, subscriptions, and invoices. 
+The dataset consisted of three entities: **customers**, **subscriptions**, and **invoices**.   
 <img width="1084" height="765" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
 
 ---
@@ -25,27 +25,26 @@ The dataset consisted of three tables, including information about customers, su
 
 ### 1. Excel → Data Cleaning & Validation  
 - Imported raw CSVs (customers, subscriptions, invoices).  
-- Standardized **date formats**, removed duplicates, and flagged missing values.  
-- Used formulas (`TRIM`, `TEXT`, `IFERROR`, `VLOOKUP`, `INDEX/MATCH`) to clean fields.  
-- Built **cross-check models** with:  
+- Used formulas (`TRIM`, `PROPER`, `IFERROR`, `ISTEXT`, `ISBLANK`) to clean fields.  
+- Fixed misspellings in **payment_type** and **plan_type** with lookup logic.  
+- Built cross-check models with:  
   - `COUNTIFS` → distinct churned customers.  
   - `SUMIFS` → ARR churn by method and delay bucket.  
-- Created **pivot tables** to reconcile totals and validate SQL outputs.  
+- Created pivot tables to reconcile totals.  
+- Purpose: act as a **QA sandbox** before scaling to SQL.  
 
-### 2. SQL → Data Modeling & KPI Calculation  
-- **Joined** customer, subscription, and invoice tables on keys (`customer_id`, `subscription_id`).  
-- Created **churn flags** using `CASE` logic.  
-- Built **delay buckets** (0–5, 6–15, 16–30, 30+ days) for payment analysis.  
-- Calculated KPIs:  
-  - Customer Churn %  
-  - ARR Churn %  
-  - ARR Loss by payment method, delay, and region  
-- Applied **window functions** to rank top enterprise accounts by churned ARR.  
+### 2. SQL → Data Cleaning & Joins (Production-ready)  
+- Translated Excel cleaning rules into PostgreSQL functions (`btrim`, `initcap`, `regexp_replace`).  
+- Standardized categories using **mapping tables**.  
+- Joined **customers ↔ subscriptions ↔ invoices** on keys.  
+- Created **churn flags** (`is_churned`) and **delay buckets** (`0–5`, `6–15`, `16–30`, `30+`).  
+- Produced a final enriched view (`vw_billing_enriched`) ready for Tableau.  
+- Even though the Tableau dashboard ran on CSVs, this SQL model shows how the pipeline would run in a real warehouse.  
 
 ### 3. Tableau → Visualization & Storytelling  
-- Connected cleaned SQL outputs and validated Excel files.  
-- Designed **interactive dashboard** with filters (region, plan type, payment method).  
-- Added **KPI cards** for Customer Churn %, ARR Churn %, ARR Loss.  
+- Connected to the three CSVs and replicated the SQL joins in Tableau’s data model.  
+- Designed an **interactive dashboard** with filters (region, plan type, payment method).  
+- Added KPI cards for **Customer Churn %**, **ARR Churn %**, and **ARR Loss**.  
 - Visualized **payment delays vs churn risk**, **regional hotspots**, and **enterprise account exposure**.  
 - Built **drilldowns** for customer-level insights.  
 
@@ -107,13 +106,11 @@ In order to evaluate churn and ARR loss, I focused on the following key metrics:
 ## Impact  
 This project demonstrates my ability to work end-to-end as a data analyst:
 
-- **Excel** → Cleaned and validated 100K+ rows of billing data, reconciled KPIs with formulas and pivots.
+- **Excel** → QA cleaning and validation on 10k-row samples.  
+- **SQL** → Modeled full dataset, joined entities, and created churn drivers.  
+- **Tableau** → Delivered an interactive dashboard with strategic insights.  
 
-- **SQL** → Modeled customer/subscription/invoice relationships, created churn drivers, and built aggregate metrics.
-
-- **Tableau** → Delivered an interactive dashboard that transformed raw data into strategic recommendations.
-
-By surfacing that manual payments and late invoices eroded nearly $380M ARR, I provided leadership with actionable insights to reduce churn and protect revenue
+By surfacing that manual payments and late invoices eroded nearly $380M ARR, I provided leadership with actionable insights to reduce churn and protect revenue.
 
 ---
 
