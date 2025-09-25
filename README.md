@@ -104,13 +104,12 @@ In order to evaluate churn and ARR loss, I focused on the following key metrics:
 ---
 
 ## Impact  
-This project demonstrates my ability to work end-to-end as a data analyst:
+By surfacing that manual payments and late invoices eroded nearly **$380M ARR**, I provided leadership with **targeted recommendations**:  
+- Customer Success and Sales should **prioritize enterprise and multi-site accounts** in the **South and Midwest**, where churn was concentrated.  
+- Finance should drive the **migration from Check/Wire to ACH/Card** and strengthen dunning with **automated reminders, retry logic, and SLAs**.  
+- At the same time, I raised the need to dig deeper with Product and Pricing teams to see if churn in these regions was also linked to **usage behavior, contract terms, or pricing sensitivity**.  
 
-- **Excel** → QA cleaning and validation on 10k-row samples.  
-- **SQL** → Modeled full dataset, joined entities, and created churn drivers.  
-- **Tableau** → Delivered an interactive dashboard with strategic insights.  
-
-By surfacing that manual payments and late invoices eroded nearly $380M ARR, I provided leadership with actionable insights to reduce churn and protect revenue.
+The impact was not only quantifying churn, but also equipping leadership with a **cross-functional playbook** to address both the **billing friction immediately** and the **underlying business drivers long-term**. 
 
 ---
 
