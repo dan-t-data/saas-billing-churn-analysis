@@ -1,4 +1,4 @@
-# SaaS Billing Churn Analysis  
+# Vastian Billing Churn Analysis  
 *(Built with synthetic data to protect confidentiality, modeled on real work at Vastian)*  
 
 ---
