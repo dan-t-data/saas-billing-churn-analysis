@@ -6,11 +6,11 @@
 ## Executive Summary  
 At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:
 
-- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
-- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and added churn flags and delay buckets.  
-- **Tableau** → designed an interactive dashboard to deliver insights for executive decision-making.  
+- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.
 
-In practice, I uploaded three clean CSVs into Tableau and created relationships to build the dashboard. To demonstrate a production-ready approach, I also authored SQL scripts that replicate the same joins and enrichments.  
+- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and added churn flags and delay buckets. Exported one clean enriched CSV.
+
+- **Tableau** → built an interactive dashboard to surface churn drivers and deliver actionable insights.
 
 The analysis revealed that enterprise accounts on manual payment methods (Check/Wire) had the highest churn, worsened by late payments and regional concentration in the South & Midwest. Recommendations to migrate customers to automated billing and strengthen collections could protect ~$380M ARR.
 
@@ -24,7 +24,7 @@ The dataset consisted of three entities: **customers**, **subscriptions**, and *
 ## Tools, Skills & Methodology
 
 ### 1. Excel → Data Cleaning & Validation  
-- Imported raw CSVs (customers, subscriptions, invoices).  
+- Imported a 10k-row sample of the raw CSVs.  
 - Used formulas (`TRIM`, `PROPER`, `IFERROR`, `ISTEXT`, `ISBLANK`) to clean fields.  
 - Fixed misspellings in **payment_type** and **plan_type** with lookup logic.  
 - Built cross-check models with:  
@@ -33,16 +33,15 @@ The dataset consisted of three entities: **customers**, **subscriptions**, and *
 - Created pivot tables to reconcile totals.  
 - Purpose: act as a **QA sandbox** before scaling to SQL.  
 
-### 2. SQL → Data Cleaning & Joins (Production-ready)  
-- Translated Excel cleaning rules into PostgreSQL functions (`btrim`, `initcap`, `regexp_replace`).  
+### 2. SQL → Data Cleaning, Joins, and Export  
+- Translated Excel cleaning rules into PostgreSQL (`btrim`, `initcap`, `regexp_replace`).  
 - Standardized categories using **mapping tables**.  
 - Joined **customers ↔ subscriptions ↔ invoices** on keys.  
 - Created **churn flags** (`is_churned`) and **delay buckets** (`0–5`, `6–15`, `16–30`, `30+`).  
-- Produced a final enriched view (`vw_billing_enriched`) ready for Tableau.  
-- Even though the Tableau dashboard ran on CSVs, this SQL model shows how the pipeline would run in a real warehouse.  
+- Produced a single enriched dataset (`vw_billing_enriched`) for Tableau.  
 
 ### 3. Tableau → Visualization & Storytelling  
-- Connected to the three CSVs and replicated the SQL joins in Tableau’s data model.  
+- Connected Tableau to the clean enriched CSV.  
 - Designed an **interactive dashboard** with filters (region, plan type, payment method).  
 - Added KPI cards for **Customer Churn %**, **ARR Churn %**, and **ARR Loss**.  
 - Visualized **payment delays vs churn risk**, **regional hotspots**, and **enterprise account exposure**.  
