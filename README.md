@@ -4,7 +4,7 @@
 ---
 
 ## Executive Summary  
-At Vastian, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:
+At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:
 
 - **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
 - **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and added churn flags and delay buckets.  
