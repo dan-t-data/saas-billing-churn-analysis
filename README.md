@@ -2,17 +2,14 @@
 *(Built with synthetic data to protect confidentiality, modeled on real work at Vastian)*  
 
 ---
-
 ## Executive Summary  
-At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:
+At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:  
 
-- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.
+- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
+- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and created churn flags and delay buckets. Exported one enriched dataset.  
+- **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers and ARR loss.  
 
-- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and added churn flags and delay buckets. Exported one clean enriched CSV.
-
-- **Tableau** → built an interactive dashboard to surface churn drivers and deliver actionable insights.
-
-The analysis revealed that enterprise accounts on manual payment methods (Check/Wire) had the highest churn, worsened by late payments and regional concentration in the South & Midwest. Recommendations to migrate customers to automated billing and strengthen collections could protect ~$380M ARR.
+The analysis revealed that **enterprise accounts on manual payment methods (Check/Wire)** churned at the highest rates, worsened by **late payments** and **regional concentration in the South & Midwest**. Overall, this equated to an estimated **$380M ARR lost to churn**, representing **11.9% of total revenue base**.  
 
 ---
 ## Dataset Structure
@@ -24,98 +21,97 @@ The dataset consisted of three entities: **customers**, **subscriptions**, and *
 ## Tools, Skills & Methodology
 
 ### 1. Excel → Data Cleaning & Validation  
-- Imported a 10k-row sample of the raw CSVs.  
-- Used formulas (`TRIM`, `PROPER`, `IFERROR`, `ISTEXT`, `ISBLANK`) to clean fields.  
-- Fixed misspellings in **payment_type** and **plan_type** with lookup logic.  
-- Built cross-check models with:  
-  - `COUNTIFS` → distinct churned customers.  
-  - `SUMIFS` → ARR churn by method and delay bucket.  
-- Created pivot tables to reconcile totals.  
-- Purpose: act as a **QA sandbox** before scaling to SQL.  
+- Cleaned raw CSVs with formulas (`TRIM`, `PROPER`, `IFERROR`) and lookup tables.  
+- Standardized values in **payment_type** and **plan_type**.  
+- Built QA checks using:  
+  - `COUNTIFS` → churned customer counts.  
+  - `SUMIFS` → churned ARR by method and delay.  
+- Used pivot tables to reconcile churn metrics before scaling to SQL.  
 
 ### 2. SQL → Data Cleaning, Joins, and Export  
-- Translated Excel cleaning rules into PostgreSQL (`btrim`, `initcap`, `regexp_replace`).  
-- Standardized categories using **mapping tables**.  
-- Joined **customers ↔ subscriptions ↔ invoices** on keys.  
+- Replicated Excel logic with SQL (`btrim`, `initcap`, `regexp_replace`).  
+- Joined **customers ↔ subscriptions ↔ invoices** on IDs.  
 - Created **churn flags** (`is_churned`) and **delay buckets** (`0–5`, `6–15`, `16–30`, `30+`).  
-- Produced a single enriched dataset (`vw_billing_enriched`) for Tableau.  
+- Exported a single clean dataset (`vw_billing_enriched`) for Tableau.  
 
 ### 3. Tableau → Visualization & Storytelling  
-- Connected Tableau to the clean enriched CSV.  
-- Designed an **interactive dashboard** with filters (region, plan type, payment method).  
-- Added KPI cards for **Customer Churn %**, **ARR Churn %**, and **ARR Loss**.  
-- Visualized **payment delays vs churn risk**, **regional hotspots**, and **enterprise account exposure**.  
-- Built **drilldowns** for customer-level insights.  
+- Built an **interactive dashboard** with filters for region, plan type, payment method, and year.  
 
 ---
 
 ## Insights Summary  
-In order to evaluate churn and ARR loss, I focused on the following key metrics:  
 
-- **Customer Churn Rate (10.6%)** → Percent of customers lost across all payment methods.  
-- **ARR Churn Rate (11.9%)** → Percent of total revenue base lost to churn.  
-- **ARR Loss by Payment Method** → Churned ARR split across manual (Check/Wire) vs automated (ACH/Card).  
-- **Churn by Payment Delay** → How late payments (0–5 days, 6–15 days, 16–30 days, 30+ days) correlate with churn rates.  
-- **Regional & Segment Patterns** → Churned ARR by region and plan type.  
+The analysis uncovered **clear patterns of revenue loss**, revealing how billing practices directly impacted churn:  
 
-**ARR Loss**  
-- ~$380M lost to churn → **11.9% of total revenue base**, but only **10.6% of customers**.  
-- This indicates churn is concentrated in **large, high-value enterprise accounts**.  
+### 1. Manual Payments Are the Core Churn Driver  
+- **Check & Wire customers account for ~$348M (91%) of churned ARR**, despite being a smaller share of the base.  
+- In contrast, **ACH/Card customers only lost ~$31M ARR**.  
+- This confirms that **billing friction is not evenly distributed — it’s concentrated in manual methods**.  
 
-**Payment Method**  
-- **Manual methods (Check/Wire)** drove ~$348M churned ARR.  
-- **Automated methods (ACH/Card)** drove only ~$31M.  
-- Manual payment friction is the single strongest churn driver.  
+### 2. Late Payments Predict Churn  
+- Customers paying **30+ days late churned at nearly 30%**, versus **<1% churn for on-time (0–5 days) payers**.  
+- This shows a **direct cause-effect link**: payment delays aren’t just a symptom — they are a leading indicator of churn risk.  
 
-**Payment Delays**  
-- Customers paying **30+ days late churn at ~30%**, compared to <1% churn for those paying on time (0–5 days).  
-- Delays are a clear predictor of churn risk.  
+### 3. Regional & Segment Concentration  
+- The **South & Midwest regions** carried the heaviest losses, with enterprise and multi-site healthcare customers disproportionately exposed.  
+- These accounts often rely on **check/wire billing**, combining regional behavior with manual process risk.  
 
-**Regional Hotspots**  
-- Churn is highest in the **South & Midwest**, especially among **enterprise and multi-site hospitals/clinics**.  
-- A small number of large enterprise accounts drove disproportionate churned ARR.  
+### 4. Churned ARR Over Time Peaks in Mid-2025  
+- Churn **spiked to ~$35M ARR in mid-2025**, almost entirely driven by **Check and Wire customers**.  
+- ACH/Card churn remained flat, reinforcing that **automated payments stabilize revenue over time**.  
+- The time series highlights **when and how churn risks materialize**, not just total loss.  
+
+### 5. Enterprise Accounts = High Impact, Low Volume  
+- Only **10.6% of customers churned**, but this translated into **11.9% of total ARR lost**.  
+- The imbalance shows churn is **not spread evenly** — large enterprise accounts drive outsized financial risk.  
 
 ---
 
+**Key Takeaway:**  
+Churn in this dataset isn’t random — it’s systemic. It clusters in **manual payment methods**, **late payers**, and **enterprise accounts in specific regions**. By addressing billing friction, the company could protect nearly **$380M ARR** and stabilize growth.  
+---
+
 ## Recommendations  
-1. **Migrate Customers to Automated Billing (ACH/Card)**  
-   - Prioritize **enterprise and multi-site accounts** on Check/Wire to reduce payment friction.  
 
-2. **Strengthen Collections (Dunning)**  
-   - Implement **automated payment reminders, retry logic, and SLAs** for overdue invoices.  
-   - Target customers in the **16–30+ day delay buckets**, where churn risk is highest.  
+1. **Migrate Customers to Automated Billing**  
+   - Focus on Check/Wire enterprise accounts first.  
+   - Incentivize ACH/Card adoption through discounts or flexible terms.  
 
-3. **Targeted Retention Efforts**  
-   - Focus Customer Success and Account Management on **South & Midwest enterprise accounts**.  
-   - Provide incentives or dedicated support for high-value accounts to migrate to automated billing.  
+2. **Strengthen Collections (Billing Ops)**  
+   - Deploy automated dunning: reminders, retry logic, SLAs.  
+   - Focus on **16–30+ day delay buckets**, where churn risk is highest.  
 
-4. **Executive Engagement**  
-   - Develop **playbooks for top at-risk enterprise customers**.  
-   - Offer custom terms, executive outreach, or migration pilots for high-churn-value accounts.  
+3. **Customer Success Retention Plays**  
+   - Prioritize **South & Midwest enterprise accounts**.  
+   - Assign executive sponsors and proactive support to top churn-risk customers.  
+
+4. **Executive & Sales Engagement**  
+   - Build **at-risk account playbooks** for high-value churn drivers.  
+   - Use revenue-at-risk data to align **Sales, CS, and Finance** on proactive outreach.  
 
 ---
 
 ## Next Steps  
-- **Phase 1 (Quick Wins):** Publish churn KPIs monthly, flag top 50 manual-payment enterprise accounts, and begin migration outreach.  
-- **Phase 2 (Process):** Automate collections in NetSuite, run ACH/Card adoption campaigns with incentives.  
-- **Phase 3 (Monitoring):** Track ARR saved, churn reduction, and migration adoption rates.  
+- **Phase 1 (Quick Wins):** Publish churn KPIs monthly, flag top 50 high-risk manual accounts.  
+- **Phase 2 (Billing Ops):** Automate collections in NetSuite and roll out ACH adoption campaigns.  
+- **Phase 3 (Retention & Monitoring):** Track ARR saved and churn reduction post-migration.  
 
 ---
 
 ## Impact  
-By surfacing that manual payments and late invoices eroded nearly **$380M ARR**, I provided leadership with **targeted recommendations**:  
-- Customer Success and Sales should **prioritize enterprise and multi-site accounts** in the **South and Midwest**, where churn was concentrated.  
-- Finance should drive the **migration from Check/Wire to ACH/Card** and strengthen dunning with **automated reminders, retry logic, and SLAs**.  
-- At the same time, I raised the need to dig deeper with Product and Pricing teams to see if churn in these regions was also linked to **usage behavior, contract terms, or pricing sensitivity**.  
+By surfacing that **manual payments and late invoices eroded ~$380M ARR**, I provided leadership with **cross-functional actions**:  
+- Sales/CS: Target at-risk enterprise accounts in South & Midwest.  
+- Finance/Billing: Lead ACH/Card migration, automate retries, strengthen dunning.  
+- Execs: Sponsor high-value churn prevention programs.  
 
-The impact was not only quantifying churn, but also equipping leadership with a **cross-functional playbook** to address both the **billing friction immediately** and the **underlying business drivers long-term**. 
+The impact was not just quantifying churn, but providing a **roadmap to protect revenue** and reduce reliance on manual billing.  
 
 ---
 
 ## Dashboard  
-The completed interactive dashboard can be found on Tableau Public [here]( https://public.tableau.com/views/SaaSChurnAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link).  
+The completed interactive dashboard is published on Tableau Public [here]( https://public.tableau.com/views/SaaSChurnAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link).  
 
-This dashboard enables users to filter by **region, plan type, payment method, and state**, and highlights key insights on **ARR loss, churn rates, payment delays, and high-risk customer segments**.  
+The dashboard enables filtering by **region, plan type, payment method, and year**. It surfaces insights on **payment delays, churn rates, ARR loss, regional exposure, and time-based churn patterns**.  
 <img width="1084" height="765" alt="image" src="https://github.com/user-attachments/assets/dcc316ab-f693-4288-945d-babf582a4c0d" />
 
 
