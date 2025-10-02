@@ -1,26 +1,38 @@
-# Revenue at Risk: Uncovering Churn Drivers in SaaS Billing 
+# Revenue at Risk: Uncovering Churn Drivers in SaaS Billing  
 *(Built with synthetic data to protect confidentiality, modeled on real work at Vastian)*  
 
 ---
-## Executive Summary  
-At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:  
 
-- **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
-- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and created churn flags, delay buckets, and renewal indicators. Exported one enriched dataset.  
-- **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers, renewal cycles, and ARR loss.  
+## Business Problem  
+At Vastian, leadership noticed a troubling pattern: **recurring revenue was falling short of forecasts during contract renewals**, even though product adoption and customer satisfaction remained strong.  
 
-The analysis revealed that **enterprise accounts on manual payment methods (Check/Wire)** churned at the highest rates, worsened by **late payments** and **regional concentration in the South & Midwest**. Spikes in churn aligned with **contract renewal cycles**, where accounts on manual billing were most at risk.  
-
-Overall, this equated to an estimated **$380M ARR lost to churn**, representing **11.9% of the total revenue base**, concentrated in a small number of high-value enterprise accounts.   
+The cause wasn’t clear — was it product usage, pricing, or something in the billing process?  
+As a **Billing Specialist**, I was tasked with leading an investigation from the billing standpoint to **quantify ARR at risk, identify the drivers of churn, and uncover why so many enterprise customers were not renewing.**  
 
 ---
-## Dataset Structure
+
+## Executive Summary  
+Through this analysis, I uncovered that the issue wasn’t product adoption at all — it was **billing friction**.  
+Enterprise accounts paying by **Check and Wire** churned at the highest rates, especially when combined with **late invoices** and **regional concentration in the South & Midwest**.  
+Churn spikes also aligned with **contract renewal cycles**, when manual-payment enterprise accounts chose not to renew.  
+
+To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:  
+
+- **Excel** → cleaned and validated a 10k-row sample to stress-test KPI logic.  
+- **SQL** → scaled those rules to the full dataset, joining customers, subscriptions, and invoices, and creating churn flags, delay buckets, and renewal indicators.  
+- **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers, renewal cycles, and ARR loss.  
+
+The analysis revealed that **$380M ARR (11.9% of the base)** was lost to churn — concentrated in a small number of high-value enterprise accounts still tied to manual billing processes.  
+
+---
+
+## Dataset Structure  
 The dataset consisted of three entities: **customers**, **subscriptions**, and **invoices**.   
 <img width="1084" height="765" alt="schema-diagram" src="https://github.com/user-attachments/assets/9a489c1b-2ebd-4da8-83c1-d8d300f30e92" />
 
 ---
 
-## Tools, Skills & Methodology
+## Tools, Skills & Methodology  
 
 ### 1. Excel → Data Cleaning & Validation  
 - Cleaned raw CSVs with formulas (`TRIM`, `PROPER`, `IFERROR`) and lookup tables.  
@@ -34,47 +46,58 @@ The dataset consisted of three entities: **customers**, **subscriptions**, and *
 - Replicated Excel logic with SQL (`btrim`, `initcap`, `regexp_replace`).  
 - Joined **customers ↔ subscriptions ↔ invoices** on IDs.  
 - Created **churn flags** (`is_churned`) and **delay buckets** (`0–5`, `6–15`, `16–30`, `30+`).  
+- Added **renewal indicators** to flag accounts with upcoming contract expirations.  
 - Exported a single clean dataset (`vw_billing_enriched`) for Tableau.  
 
 ### 3. Tableau → Visualization & Storytelling  
 - Built an **interactive dashboard** with filters for region, plan type, payment method, and year.  
+- Added KPI cards for churn % (customers & ARR) and total ARR lost.  
+- Visuals included:  
+  - **Payment Method Pie** → manual vs automated churn share.  
+  - **Delay Buckets** → how late payments drive higher churn.  
+  - **Regional Heatmap** → South & Midwest enterprise churn exposure.  
+  - **Churned ARR Over Time (by Payment Type)** → churn spikes at renewal cycles.  
+  - **State-Level Map** → geographic prioritization for retention.  
 
 ---
 
 ## Insights Summary  
 
-The analysis uncovered **clear patterns of revenue loss**, revealing how billing practices and renewal cycles directly impacted churn:  
+From a **billing perspective**, the analysis uncovered **systemic revenue risk** at Vastian:  
 
 ### 1. Manual Payments Are the Core Churn Driver  
 - **Check & Wire customers account for ~$348M (91%) of churned ARR**, despite being a smaller share of the base.  
 - In contrast, **ACH/Card customers only lost ~$31M ARR**.  
-- This confirms that **billing friction is not evenly distributed, it’s concentrated in manual methods**.  
+- Manual billing created the biggest friction at renewal.  
 
 ### 2. Late Payments Predict Churn  
 - Customers paying **30+ days late churned at nearly 30%**, versus **<1% churn for on-time (0–5 days) payers**.  
-- This shows a **direct cause-effect link**: payment delays aren’t just a symptom, they are a leading indicator of churn risk.  
+- From a billing ops lens, **collections delays were a leading indicator of churn risk**.  
 
 ### 3. Regional & Segment Concentration  
 - The **South & Midwest regions** carried the heaviest losses, with enterprise and multi-site healthcare customers disproportionately exposed.  
-- These accounts often rely on **check/wire billing**, combining regional behavior with manual process risk.  
+- These accounts often relied on **check/wire billing**, compounding billing friction and renewal risk.  
 
 ### 4. Churned ARR Over Time Peaks in Mid-2025  
-- Manual methods not only **dominate total churn**, but also **drive spikes in churned ARR month to month**.  
-- The line graph shows that in **mid-2025**, churn peaked at ~$35M, led almost entirely by **Check and Wire customers**.  
-- These peaks likely align with **contract renewal cycles**, where large enterprise accounts chose not to renew due to billing friction.  
-- ACH and Card remained flat throughout, reinforcing that **automated payments stabilize revenue and renewals**.  
+- Churn **spiked to ~$35M ARR in mid-2025**, led almost entirely by **Check and Wire customers**.  
+- These peaks aligned with **contract renewal cycles**, when manual-payment accounts dropped off.  
+- ACH and Card remained stable, reinforcing that **automated billing supports smoother renewals**.  
 
 ### 5. Enterprise Accounts = High Impact, Low Volume  
 - Only **10.6% of customers churned**, but this translated into **11.9% of total ARR lost**.  
-- The imbalance shows churn is **not spread evenly**, large enterprise accounts drive outsized financial risk.  
+- The imbalance shows churn was **concentrated in a handful of high-value enterprise accounts with billing inefficiencies**.  
 
 ---
 
 **Key Takeaway:**  
-- Churn in this dataset isn’t random, it’s systemic. It clusters in **manual payment methods**, **late payers**, and **enterprise accounts with renewals** in specific regions. By addressing billing friction and proactively managing renewals, the company could protect nearly **$380M ARR** and stabilize growth.
+The root cause of Vastian’s ARR erosion wasn’t product adoption — it was **billing friction at renewal**.  
+Manual payments, late invoices, and regional patterns combined to create nearly **$380M in preventable ARR loss**.  
+
 ---
 
 ## Recommendations  
+
+From a billing operations standpoint, I recommended:  
 
 1. **Migrate Customers to Automated Billing**  
    - Focus on Check/Wire enterprise accounts first.  
@@ -85,16 +108,16 @@ The analysis uncovered **clear patterns of revenue loss**, revealing how billing
    - Focus on **16–30+ day delay buckets**, where churn risk is highest.  
 
 3. **Customer Success Retention Plays**  
-   - Prioritize **South & Midwest enterprise accounts**.  
-   - Assign executive sponsors and proactive support to top churn-risk customers.  
+   - Partner with CS to prioritize **South & Midwest enterprise accounts** still on manual billing.  
+   - Assign executive sponsors for renewal conversations.  
 
 4. **Executive & Sales Engagement**  
    - Build **at-risk account playbooks** for high-value churn drivers.  
-   - Use revenue-at-risk data to align **Sales, CS, and Finance** on proactive outreach.
+   - Use revenue-at-risk data to align **Sales, CS, and Finance** on proactive outreach.  
 
 5. **Renewal Risk Management**  
-   - Proactively flag enterprise accounts with **upcoming contract renewals** that are still on Check/Wire.  
-   - Partner Customer Success with Billing to migrate them ahead of renewal dates, preventing churn spikes.    
+   - Proactively flag enterprise accounts with **upcoming contract renewals** still on Check/Wire.  
+   - Partner Billing + CS to migrate them ahead of renewal dates to avoid churn spikes.    
 
 ---
 
@@ -106,19 +129,22 @@ The analysis uncovered **clear patterns of revenue loss**, revealing how billing
 ---
 
 ## Impact  
-By surfacing that **manual payments, late invoices, and renewal drop-offs eroded ~$380M ARR**, I provided leadership with **cross-functional actions**:  
-- **Sales/CS:** Target at-risk enterprise accounts in the South & Midwest, and build renewal playbooks for customers on manual payment methods.  
-- **Finance/Billing:** Lead ACH/Card migration, automate retries, strengthen dunning, and align renewal timelines with proactive billing support.  
-- **Executives:** Sponsor high-value churn prevention programs, ensuring renewals are not lost due to billing inefficiencies.  
+As a **Billing Specialist**, I quantified how **manual payments, late invoices, and renewal drop-offs eroded ~$380M ARR** and provided leadership with a roadmap to act.  
 
-The impact was not just quantifying churn, but providing a **forward-looking roadmap to protect revenue**, combining billing automation, collections improvements, and renewal risk management to stabilize long-term ARR.  
+- **Sales/CS:** Target at-risk enterprise accounts in the South & Midwest, and build renewal playbooks for customers still on manual payment methods.  
+- **Finance/Billing:** Lead ACH/Card migration, automate retries, strengthen dunning, and align renewal timelines with billing improvements.  
+- **Executives:** Sponsor high-value churn prevention programs, ensuring renewals aren’t lost due to billing inefficiencies.  
 
+The impact was not just quantifying churn, but providing a **forward-looking plan to protect revenue** — combining **billing automation, collections improvements, and renewal risk management** to stabilize long-term ARR.  
+
+---
 
 ## Dashboard  
-The completed interactive dashboard is published on Tableau Public [here](https://public.tableau.com/views/SaaSBillingChurnDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link).
+The completed interactive dashboard is published on Tableau Public [here](https://public.tableau.com/views/SaaSBillingChurnDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link).  
 
-The dashboard enables filtering by **region, plan type, payment method, and year**. It surfaces insights on **payment delays, churn rates, ARR loss, regional exposure, and time-based churn patterns**.  
+The dashboard enables filtering by **region, plan type, payment method, and year**. 
 <img width="1115" height="849" alt="image" src="https://github.com/user-attachments/assets/14d1a610-fcaa-4440-b87e-66089cf75f40" />
+
 
 
 
