@@ -6,13 +6,13 @@
 ## Business Problem  
 At Vastian, leadership noticed a troubling pattern: **recurring revenue was falling short of forecasts during contract renewals**, even though product adoption and customer satisfaction remained strong.  
 
-The cause wasn’t clear — was it product usage, pricing, or something in the billing process?  
+The cause wasn’t clear, was it product usage, pricing, or something in the billing process?  
 As a **Billing Specialist**, I was tasked with leading an investigation from the billing standpoint to **quantify ARR at risk, identify the drivers of churn, and uncover why so many enterprise customers were not renewing.**  
 
 ---
 
 ## Executive Summary  
-Through this analysis, I uncovered that the issue wasn’t product adoption at all — it was **billing friction**.  
+Through this analysis, I uncovered that the issue wasn’t product adoption at all , it was **billing friction**.  
 Enterprise accounts paying by **Check and Wire** churned at the highest rates, especially when combined with **late invoices** and **regional concentration in the South & Midwest**.  
 Churn spikes also aligned with **contract renewal cycles**, when manual-payment enterprise accounts chose not to renew.  
 
@@ -22,7 +22,7 @@ To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau
 - **SQL** → scaled those rules to the full dataset, joining customers, subscriptions, and invoices, and creating churn flags, delay buckets, and renewal indicators.  
 - **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers, renewal cycles, and ARR loss.  
 
-The analysis revealed that **$380M ARR (11.9% of the base)** was lost to churn — concentrated in a small number of high-value enterprise accounts still tied to manual billing processes.  
+The analysis revealed that **$380M ARR (11.9% of the base)** was lost to churn , concentrated in a small number of high-value enterprise accounts still tied to manual billing processes.  
 
 ---
 
@@ -90,7 +90,7 @@ From a **billing perspective**, the analysis uncovered **systemic revenue risk**
 ---
 
 **Key Takeaway:**  
-The root cause of Vastian’s ARR erosion wasn’t product adoption — it was **billing friction at renewal**.  
+The root cause of Vastian’s ARR erosion wasn’t product adoption , it was **billing friction at renewal**.  
 Manual payments, late invoices, and regional patterns combined to create nearly **$380M in preventable ARR loss**.  
 
 ---
@@ -135,7 +135,7 @@ As a **Billing Specialist**, I quantified how **manual payments, late invoices, 
 - **Finance/Billing:** Lead ACH/Card migration, automate retries, strengthen dunning, and align renewal timelines with billing improvements.  
 - **Executives:** Sponsor high-value churn prevention programs, ensuring renewals aren’t lost due to billing inefficiencies.  
 
-The impact was not just quantifying churn, but providing a **forward-looking plan to protect revenue** — combining **billing automation, collections improvements, and renewal risk management** to stabilize long-term ARR.  
+The impact was not just quantifying churn, but providing a **forward-looking plan to protect revenue** , combining **billing automation, collections improvements, and renewal risk management** to stabilize long-term ARR.  
 
 ---
 
