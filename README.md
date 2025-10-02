@@ -6,10 +6,12 @@
 At Vastian, a Software-as-a-Service (SaaS) company, I conducted a churn analysis to quantify recurring revenue loss and uncover billing-driven churn risks. To ensure rigor, I built an end-to-end workflow across **Excel, SQL, and Tableau**:  
 
 - **Excel** → cleaned and validated a 10k-row sample to spot inconsistencies and stress-test KPI logic.  
-- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and created churn flags and delay buckets. Exported one enriched dataset.  
-- **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers and ARR loss.  
+- **SQL** → scaled those cleaning rules to the full dataset, joined customers/subscriptions/invoices, and created churn flags, delay buckets, and renewal indicators. Exported one enriched dataset.  
+- **Tableau** → designed an interactive dashboard with KPIs, filters, and visuals to surface churn drivers, renewal cycles, and ARR loss.  
 
-The analysis revealed that **enterprise accounts on manual payment methods (Check/Wire)** churned at the highest rates, worsened by **late payments** and **regional concentration in the South & Midwest**. Overall, this equated to an estimated **$380M ARR lost to churn**, representing **11.9% of total revenue base**.  
+The analysis revealed that **enterprise accounts on manual payment methods (Check/Wire)** churned at the highest rates, worsened by **late payments** and **regional concentration in the South & Midwest**. Spikes in churn aligned with **contract renewal cycles**, where accounts on manual billing were most at risk.  
+
+Overall, this equated to an estimated **$380M ARR lost to churn**, representing **11.9% of the total revenue base**, concentrated in a small number of high-value enterprise accounts.   
 
 ---
 ## Dataset Structure
