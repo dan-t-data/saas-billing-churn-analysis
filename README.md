@@ -109,7 +109,7 @@ The impact was not just quantifying churn, but providing a **roadmap to protect 
 ---
 
 ## Dashboard  
-The completed interactive dashboard is published on Tableau Public [here]( https://public.tableau.com/views/SaaSChurnAnalysisDashboard/Dashboard1?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link).  
+The completed interactive dashboard is published on Tableau Public [here](https://public.tableau.com/views/SaaSBillingChurnDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link).
 
 The dashboard enables filtering by **region, plan type, payment method, and year**. It surfaces insights on **payment delays, churn rates, ARR loss, regional exposure, and time-based churn patterns**.  
 <img width="1084" height="765" alt="image" src="https://github.com/user-attachments/assets/dcc316ab-f693-4288-945d-babf582a4c0d" />
