@@ -4,7 +4,7 @@
 ---
 
 ## Business Problem  
-At Vastian, a Software-as-a-Service (SaaS) company, leadership noticed a troubling pattern: **recurring revenue was falling short of forecasts during contract renewals**, even though product adoption and customer satisfaction remained strong.  
+At Vastian, a Software-as-a-Service (SaaS) company, leadership noticed a problem: **recurring revenue was falling short of forecasts during contract renewals**, even though product adoption and customer satisfaction remained strong.  
 
 The cause wasn’t clear, was it product usage, pricing, or something in the billing process?  
 As a **Billing Specialist**, I was tasked with leading an investigation from the billing standpoint to **quantify ARR at risk, identify the drivers of churn, and uncover why so many enterprise customers were not renewing.**  
