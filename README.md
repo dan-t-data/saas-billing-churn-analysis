@@ -1,4 +1,4 @@
-# Revenue at Risk: Uncovering Churn Drivers in SaaS Billing  
+# Revenue at Risk: Uncovering Churn Drivers in Billing Operations
 *(Built with synthetic data to protect confidentiality, modeled on real work at Vastian)*  
 
 ---
